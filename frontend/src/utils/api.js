@@ -1,7 +1,11 @@
 import axios from 'axios'
 
+const apiBaseUrl =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? '/api' : 'https://scholar-ai-web-application.onrender.com')
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: apiBaseUrl,
   timeout: 60000,
 })
 
