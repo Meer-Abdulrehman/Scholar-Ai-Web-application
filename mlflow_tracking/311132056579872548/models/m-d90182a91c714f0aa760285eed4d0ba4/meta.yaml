@@ -1,0 +1,10 @@
+artifact_location: file:C:/Users/Abdurrehman/Desktop/data science project/mlflow_tracking/311132056579872548/models/m-d90182a91c714f0aa760285eed4d0ba4/artifacts
+creation_timestamp: 1777649926155
+experiment_id: '311132056579872548'
+last_updated_timestamp: 1777649929571
+model_id: m-d90182a91c714f0aa760285eed4d0ba4
+model_type: null
+name: lr_model
+source_run_id: ac18d08c3579439ca0b393df728ced0a
+status: 2
+status_message: null

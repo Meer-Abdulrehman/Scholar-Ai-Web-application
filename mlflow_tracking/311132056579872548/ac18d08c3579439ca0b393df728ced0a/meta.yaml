@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/Abdurrehman/Desktop/data science project/mlflow_tracking/311132056579872548/ac18d08c3579439ca0b393df728ced0a/artifacts
+end_time: 1777649929577
+entry_point_name: ''
+experiment_id: '311132056579872548'
+lifecycle_stage: active
+run_id: ac18d08c3579439ca0b393df728ced0a
+run_name: Linear_Regression
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1777649926139
+status: 3
+tags: []
+user_id: Abdulrehman

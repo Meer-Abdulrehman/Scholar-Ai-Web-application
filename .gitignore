@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.eggs/
+
+# Virtual environments
+backend/venv/
+backend/.venv/
+frontend/node_modules/
+
+# Environment files — NEVER commit real keys
+backend/.env
+frontend/.env
+frontend/.env.local
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build output
+frontend/dist/
+frontend/build/
+
+# Docker
+*.log

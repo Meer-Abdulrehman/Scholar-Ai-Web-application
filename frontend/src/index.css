@@ -1,0 +1,384 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════
+   DARK MODE (default)
+═══════════════════════════════════════════ */
+:root,
+.dark {
+  --c-primary:                   #b4c5ff;
+  --c-primary-container:         #2563eb;
+  --c-on-primary:                #002a78;
+  --c-on-primary-container:      #eeefff;
+  --c-secondary:                 #4cd7f6;
+  --c-secondary-container:       #03b5d3;
+  --c-on-secondary:              #003640;
+  --c-on-secondary-container:    #00424e;
+  --c-tertiary:                  #ffb596;
+  --c-tertiary-container:        #bc4800;
+  --c-on-tertiary-container:     #ffede6;
+  --c-background:                #11131b;
+  --c-surface:                   #11131b;
+  --c-surface-dim:               #11131b;
+  --c-surface-container:         #1d1f27;
+  --c-surface-container-low:     #191b23;
+  --c-surface-container-high:    #282a32;
+  --c-surface-container-highest: #32343d;
+  --c-surface-container-lowest:  #0c0e16;
+  --c-surface-variant:           #32343d;
+  --c-surface-bright:            #373942;
+  --c-on-surface:                #e1e2ed;
+  --c-on-surface-variant:        #c3c6d7;
+  --c-on-background:             #e1e2ed;
+  --c-outline:                   #8d90a0;
+  --c-outline-variant:           #434655;
+  --c-inverse-surface:           #e1e2ed;
+  --c-inverse-on-surface:        #2e3039;
+  --c-inverse-primary:           #0053db;
+  --c-error:                     #ffb4ab;
+  --c-error-container:           #93000a;
+  --c-on-error:                  #690005;
+  --c-on-error-container:        #ffdad6;
+
+  /* Hardcoded hex equivalents for override */
+  --hex-bg-darkest:   #0B1120;
+  --hex-bg-dark:      #0F172A;
+  --hex-card:         #1d1f27;
+  --hex-border:       #1F2937;
+  --hex-border2:      #374151;
+  --hex-hover:        #282a32;
+  --text-main:        #e1e2ed;
+  --text-muted:       #94a3b8;
+  --text-dimmer:      #64748b;
+}
+
+/* ═══════════════════════════════════════════
+   GLOBAL ANIMATIONS
+═══════════════════════════════════════════ */
+
+/* Fade up — cards, results, sections */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade in — simple opacity */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Scale in — modals, popups, result cards */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Slide from left — hero text, sidebar */
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Slide from right */
+@keyframes slide-left {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Float — empty state icons */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* Pulse glow — grade number */
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(6,182,212,0.4); }
+  50%       { text-shadow: 0 0 20px rgba(6,182,212,0.9), 0 0 40px rgba(6,182,212,0.4); }
+}
+
+/* Bar fill — result card progress bar */
+@keyframes bar-fill {
+  from { width: 0%; }
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* Animation classes */
+.anim-fade-up    { animation: fade-up   0.5s ease both; }
+.anim-fade-in    { animation: fade-in   0.4s ease both; }
+.anim-scale-in   { animation: scale-in  0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+.anim-slide-right{ animation: slide-right 0.5s ease both; }
+.anim-slide-left { animation: slide-left  0.5s ease both; }
+.anim-float      { animation: float 3s ease-in-out infinite; }
+.anim-glow       { animation: glow-pulse 2s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════
+   LOGIN ROBOT ANIMATIONS
+═══════════════════════════════════════════ */
+
+@keyframes robot-login-idle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-4px) rotate(1.5deg); }
+}
+
+@keyframes robot-login-peek {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  30%  { transform: translateY(-6px) rotate(-3deg); }
+  60%  { transform: translateY(-4px) rotate(2deg); }
+  100% { transform: translateY(-5px) rotate(-1deg); }
+}
+
+@keyframes robot-login-happy {
+  0%   { transform: translateY(0px)   rotate(0deg)   scale(1);    }
+  10%  { transform: translateY(-18px) rotate(-15deg) scale(1.12); }
+  20%  { transform: translateY(-2px)  rotate(15deg)  scale(1.06); }
+  30%  { transform: translateY(-16px) rotate(-12deg) scale(1.12); }
+  40%  { transform: translateY(-2px)  rotate(12deg)  scale(1.06); }
+  50%  { transform: translateY(-14px) rotate(-8deg)  scale(1.1);  }
+  60%  { transform: translateY(-2px)  rotate(8deg)   scale(1.05); }
+  70%  { transform: translateY(-12px) rotate(-5deg)  scale(1.08); }
+  80%  { transform: translateY(-2px)  rotate(5deg)   scale(1.04); }
+  90%  { transform: translateY(-8px)  rotate(-3deg)  scale(1.02); }
+  100% { transform: translateY(0px)   rotate(0deg)   scale(1);    }
+}
+
+@keyframes robot-login-sad {
+  0%   { transform: translateY(0px)  rotate(0deg); }
+  30%  { transform: translateY(6px)  rotate(-4deg); }
+  60%  { transform: translateY(4px)  rotate(3deg); }
+  100% { transform: translateY(5px)  rotate(-2deg); }
+}
+
+.animate-robot-idle   { animation: robot-login-idle  2.5s ease-in-out infinite; }
+.animate-robot-peek   { animation: robot-login-peek  0.5s ease-out forwards; }
+.animate-robot-happy  { animation: robot-login-happy 0.8s ease-in-out 3; }
+.animate-robot-sad    { animation: robot-login-sad   0.6s ease-out forwards; }
+
+/* ═══════════════════════════════════════════
+   ROBOT DANCE ANIMATION
+═══════════════════════════════════════════ */
+@keyframes robot-dance {
+  0%   { transform: rotate(-8deg) translateY(0px) scale(1); }
+  15%  { transform: rotate(8deg)  translateY(-3px) scale(1.05); }
+  30%  { transform: rotate(-6deg) translateY(0px) scale(1); }
+  45%  { transform: rotate(6deg)  translateY(-2px) scale(1.03); }
+  60%  { transform: rotate(-4deg) translateY(0px) scale(1); }
+  75%  { transform: rotate(4deg)  translateY(-1px) scale(1.02); }
+  90%  { transform: rotate(-2deg) translateY(0px) scale(1); }
+  100% { transform: rotate(0deg)  translateY(0px) scale(1); }
+}
+
+@keyframes robot-idle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-2px) rotate(1deg); }
+}
+
+.robot-logo {
+  animation: robot-idle 2.5s ease-in-out infinite;
+  transform-origin: center;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.robot-logo:hover {
+  animation: robot-dance 0.7s ease-in-out;
+  filter: drop-shadow(0 0 6px #06b6d4);
+}
+
+/* ═══════════════════════════════════════════
+   LIGHT MODE
+═══════════════════════════════════════════ */
+.light {
+  --c-primary:                   #2563eb;
+  --c-primary-container:         #3b82f6;
+  --c-on-primary:                #ffffff;
+  --c-on-primary-container:      #ffffff;
+  --c-secondary:                 #0891b2;
+  --c-secondary-container:       #0e7490;
+  --c-on-secondary:              #ffffff;
+  --c-on-secondary-container:    #ffffff;
+  --c-tertiary:                  #ea580c;
+  --c-tertiary-container:        #f97316;
+  --c-on-tertiary-container:     #ffffff;
+  --c-background:                #f0f4ff;
+  --c-surface:                   #f5f7ff;
+  --c-surface-dim:               #e8eeff;
+  --c-surface-container:         #ffffff;
+  --c-surface-container-low:     #f8faff;
+  --c-surface-container-high:    #eef1ff;
+  --c-surface-container-highest: #e2e8ff;
+  --c-surface-container-lowest:  #f0f4ff;
+  --c-surface-variant:           #dde5ff;
+  --c-surface-bright:            #ffffff;
+  --c-on-surface:                #1e293b;
+  --c-on-surface-variant:        #475569;
+  --c-on-background:             #1e293b;
+  --c-outline:                   #94a3b8;
+  --c-outline-variant:           #c7d2fe;
+  --c-inverse-surface:           #1e293b;
+  --c-inverse-on-surface:        #f1f5f9;
+  --c-inverse-primary:           #93c5fd;
+  --c-error:                     #dc2626;
+  --c-error-container:           #fee2e2;
+  --c-on-error:                  #ffffff;
+  --c-on-error-container:        #991b1b;
+
+  --hex-bg-darkest:   #e0e7ff;
+  --hex-bg-dark:      #e8eeff;
+  --hex-card:         #ffffff;
+  --hex-border:       #c7d2fe;
+  --hex-border2:      #a5b4fc;
+  --hex-hover:        #eef1ff;
+  --text-main:        #1e293b;
+  --text-muted:       #475569;
+  --text-dimmer:      #64748b;
+}
+
+/* ═══════════════════════════════════════════
+   BASE STYLES
+═══════════════════════════════════════════ */
+@layer base {
+  body {
+    @apply bg-background text-on-background font-poppins;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   GLASS CARD
+═══════════════════════════════════════════ */
+.dark .glass-card {
+  background: rgba(17, 19, 27, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(67, 70, 85, 0.5);
+}
+
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(199, 210, 254, 0.6);
+  box-shadow: 0 2px 16px rgba(99, 102, 241, 0.06);
+}
+
+/* Hero cards sit on gradient — always dark glass, never overridden */
+.hero-card,
+.light .hero-card,
+.dark .hero-card {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: none !important;
+}
+
+/* ═══════════════════════════════════════════
+   HARDCODED HEX BACKGROUNDS — light overrides
+═══════════════════════════════════════════ */
+.light .bg-\[\#0B1120\]    { background-color: var(--hex-bg-darkest) !important; }
+.light .bg-\[\#0F172A\]    { background-color: var(--hex-bg-dark)    !important; }
+.light .bg-\[\#1d1f27\]    { background-color: var(--hex-card)       !important; }
+.light .bg-\[\#1F2937\]    { background-color: var(--hex-border)     !important; }
+.light .bg-\[\#282a32\]    { background-color: var(--hex-hover)      !important; }
+.light .bg-\[\#374151\]    { background-color: var(--hex-border2)    !important; }
+.light .bg-\[\#11131b\]    { background-color: var(--c-background)   !important; }
+
+/* Slate/dark backgrounds used in components */
+.light .bg-slate-800\/50 { background-color: rgba(199, 210, 254, 0.3) !important; }
+.light .bg-black\/70     { background-color: rgba(30, 41, 59, 0.75)   !important; }
+
+/* ═══════════════════════════════════════════
+   HARDCODED TEXT — light overrides
+═══════════════════════════════════════════ */
+.light .text-white  { color: var(--text-main)  !important; }
+.light .text-slate-300 { color: #334155 !important; }
+.light .text-slate-400 { color: #475569 !important; }
+.light .text-slate-500 { color: #64748b !important; }
+.light .text-slate-600 { color: #475569 !important; }
+
+/* ═══════════════════════════════════════════
+   HARDCODED BORDERS — light overrides
+═══════════════════════════════════════════ */
+.light .border-\[\#1F2937\]    { border-color: var(--hex-border)  !important; }
+.light .border-\[\#374151\]    { border-color: var(--hex-border2) !important; }
+.light .border-\[\#434655\]    { border-color: var(--c-outline-variant) !important; }
+.light .border-\[\#1F2937\]\/50 { border-color: rgba(199, 210, 254, 0.5) !important; }
+.light .border-outline-variant  { border-color: var(--c-outline-variant) !important; }
+
+/* ═══════════════════════════════════════════
+   NAVBAR — light
+═══════════════════════════════════════════ */
+.light nav.sticky {
+  background-color: rgba(224, 231, 255, 0.92) !important;
+  border-bottom-color: #c7d2fe !important;
+}
+
+/* ═══════════════════════════════════════════
+   SIDEBAR (History page)
+═══════════════════════════════════════════ */
+.light aside {
+  background-color: var(--hex-bg-dark) !important;
+  border-right-color: var(--hex-border) !important;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.light footer {
+  background-color: var(--hex-bg-darkest) !important;
+  border-top-color: var(--hex-border) !important;
+}
+
+/* ═══════════════════════════════════════════
+   HOVER STATES — light
+═══════════════════════════════════════════ */
+.light .hover\:bg-\[\#1F2937\]:hover  { background-color: var(--hex-border) !important; }
+.light .hover\:bg-\[\#2D3748\]:hover  { background-color: #dde5ff !important; }
+.light .hover\:bg-\[\#1F2937\]\/50:hover { background-color: rgba(199,210,254,0.4) !important; }
+
+/* ═══════════════════════════════════════════
+   INPUT FIELDS
+═══════════════════════════════════════════ */
+.light input[type="number"],
+.light input[type="text"],
+.light input[type="range"] {
+  color: var(--text-main);
+  background-color: var(--c-surface-container-high);
+  border-color: var(--c-outline-variant);
+}
+
+/* ═══════════════════════════════════════════
+   DROPDOWN / MODAL BG — light
+═══════════════════════════════════════════ */
+.light .bg-\[\#1d1f27\].border {
+  background-color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════
+   HISTORY CARD specific
+═══════════════════════════════════════════ */
+.light .border-primary-container\/30 { border-color: rgba(37,99,235,0.25) !important; }
+.light .bg-primary-container\/20     { background-color: rgba(59,130,246,0.1) !important; }
+
+/* ═══════════════════════════════════════════
+   MATERIAL SYMBOLS
+═══════════════════════════════════════════ */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR — light mode
+═══════════════════════════════════════════ */
+.light ::-webkit-scrollbar { width: 6px; }
+.light ::-webkit-scrollbar-track { background: #e8eeff; }
+.light ::-webkit-scrollbar-thumb { background: #a5b4fc; border-radius: 3px; }

@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/Abdurrehman/Desktop/data science project/mlflow_tracking/311132056579872548/4e63f7f1e89e46c19acc5d9ec041dd6e/artifacts
+end_time: 1777649934039
+entry_point_name: ''
+experiment_id: '311132056579872548'
+lifecycle_stage: active
+run_id: 4e63f7f1e89e46c19acc5d9ec041dd6e
+run_name: RF_Tuned_Best
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1777649931807
+status: 3
+tags: []
+user_id: Abdulrehman

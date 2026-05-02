@@ -1,0 +1,23 @@
+artifact_path: file:C:/Users/Abdurrehman/Desktop/data science project/mlflow_tracking/311132056579872548/models/m-d90182a91c714f0aa760285eed4d0ba4/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.14.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.11.1
+model_id: m-d90182a91c714f0aa760285eed4d0ba4
+model_size_bytes: 512
+model_uuid: m-d90182a91c714f0aa760285eed4d0ba4
+prompts: null
+run_id: ac18d08c3579439ca0b393df728ced0a
+utc_time_created: '2026-05-01 15:38:46.167459'

@@ -1,0 +1,10 @@
+artifact_location: file:C:/Users/Abdurrehman/Desktop/data science project/mlflow_tracking/311132056579872548/models/m-9ee43151a2934b5a9e47eb7a5639918c/artifacts
+creation_timestamp: 1777649931825
+experiment_id: '311132056579872548'
+last_updated_timestamp: 1777649934032
+model_id: m-9ee43151a2934b5a9e47eb7a5639918c
+model_type: null
+name: best_rf
+source_run_id: 4e63f7f1e89e46c19acc5d9ec041dd6e
+status: 2
+status_message: null
