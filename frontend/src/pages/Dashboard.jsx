@@ -85,10 +85,14 @@ export default function Dashboard() {
         ? `Key factor: ${shapTop.feature.replace(/_/g,' ')} had the highest impact.`
         : ''
 
+      const topCareerLine = (data?.careers ?? [])
+        .slice(0, 3)
+        .map((c, i) => `${i + 1}: ${c?.name ?? 'Unknown'} at ${c?.match ?? 0} percent`)
+        .join(', ')
+
       const summary =
         `Results are ready. Predicted grade: ${grade} percent. Status: ${status}. Level: ${level}. ` +
-        `Top careers: ${career} at ${match} percent, ` +
-        `${data?.careers?.[1]?.name ?? ''} at ${data?.careers?.[1]?.match ?? ''}  percent. ` +
+        `Top careers: ${topCareerLine || `${career} at ${match} percent`}. ` +
         shapLine
 
       speak(summary)
