@@ -22,11 +22,12 @@ def _send(to_email: str, subject: str, html_body: str) -> None:
     msg.attach(MIMEText(html_body, "html"))
 
     try:
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-            server.ehlo()
-            server.starttls()
-            server.login(EMAIL_USER, EMAIL_PASS)
-            server.sendmail(EMAIL_USER, to_email, msg.as_string())
+      print(f"[INFO] Sending email to {to_email}: {subject}")
+      with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+        server.ehlo()
+        server.starttls()
+        server.login(EMAIL_USER, EMAIL_PASS)
+        server.sendmail(EMAIL_USER, to_email, msg.as_string())
         print(f"[INFO] Email sent to {to_email}: {subject}")
     except Exception as exc:
         print(f"[WARNING] Email failed: {exc}")

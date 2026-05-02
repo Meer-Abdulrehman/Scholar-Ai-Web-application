@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from datetime import datetime
 from bson import ObjectId
+import threading
 
 from models.user import UserSignup, UserLogin
 from services.auth_service import hash_password, verify_password, create_token, decode_token
@@ -42,7 +43,11 @@ def signup(data: UserSignup):
     token = create_token({"sub": str(inserted.inserted_id), "email": data.email})
 
     try:
-        send_welcome_email(data.email, data.name)
+        threading.Thread(
+            target=send_welcome_email,
+            args=(data.email, data.name),
+            daemon=True,
+        ).start()
     except Exception as exc:
         print(f"[WARNING] Welcome email failed: {exc}")
 
@@ -61,7 +66,11 @@ def login(data: UserLogin):
     token = create_token({"sub": str(user_doc["_id"]), "email": data.email})
 
     try:
-        send_login_alert(data.email, user_doc.get("name", ""))
+        threading.Thread(
+            target=send_login_alert,
+            args=(data.email, user_doc.get("name", "")),
+            daemon=True,
+        ).start()
     except Exception as exc:
         print(f"[WARNING] Login alert email failed: {exc}")
 
