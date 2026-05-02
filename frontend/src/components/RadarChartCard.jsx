@@ -9,7 +9,7 @@ export default function RadarChartCard({ math, science, english, computer }) {
   ]
 
   return (
-    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 sm:p-6 flex flex-col">
+    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 sm:p-6 flex flex-col h-full">
       <h3 className="text-sm font-semibold text-on-surface mb-4">Competency Profile</h3>
       <div className="flex-1 min-h-[160px] sm:min-h-[180px]">
         <ResponsiveContainer width="100%" height={180}>

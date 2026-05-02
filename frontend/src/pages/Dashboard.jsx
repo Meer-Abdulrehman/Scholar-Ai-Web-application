@@ -165,15 +165,15 @@ export default function Dashboard() {
             {results && !loading && (
               <>
                 {/* Grade + Career */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="anim-fade-up"><ResultCard prediction={results.prediction} /></div>
-                  <div className="anim-fade-up delay-150"><CareerChart careers={results.careers} /></div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+                  <div className="anim-fade-up h-full"><ResultCard prediction={results.prediction} /></div>
+                  <div className="anim-fade-up delay-150 h-full"><CareerChart careers={results.careers} /></div>
                 </div>
 
                 {/* SHAP + Radar */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="anim-fade-up delay-200"><ShapChart shap={results.shap} /></div>
-                  <div className="anim-fade-up delay-300"><RadarChartCard
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+                  <div className="anim-fade-up delay-200 h-full"><ShapChart shap={results.shap} /></div>
+                  <div className="anim-fade-up delay-300 h-full"><RadarChartCard
                     math={form.math} science={form.science}
                     english={form.english} computer={form.computer}
                   /></div>

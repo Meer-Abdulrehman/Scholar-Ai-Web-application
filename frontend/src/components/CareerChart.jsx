@@ -3,9 +3,9 @@ const BAR_COLORS   = ['bg-yellow-500', 'bg-blue-400', 'bg-orange-400']
 
 export default function CareerChart({ careers }) {
   return (
-    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 sm:p-6">
+    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 sm:p-6 h-full flex flex-col">
       <div className="text-label-caps font-bold text-on-surface-variant tracking-widest mb-4">CAREER RECOMMENDATIONS</div>
-      <div className="space-y-4">
+      <div className="space-y-4 flex-1">
         {careers.map((c, i) => (
           <div key={c.name} className="flex items-start gap-3">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${MEDAL_COLORS[i]}`}>

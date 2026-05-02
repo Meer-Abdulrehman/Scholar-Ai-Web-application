@@ -3,7 +3,7 @@ export default function ResultCard({ prediction }) {
   const isPass = status === 'Pass'
 
   return (
-    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center text-center anim-scale-in">
+    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center text-center anim-scale-in h-full">
       <div className="text-label-caps font-bold text-on-surface-variant tracking-widest mb-2 anim-fade-in delay-100">PREDICTED PERFORMANCE</div>
       <div className="text-6xl font-black text-secondary mb-2 anim-glow anim-scale-in delay-200">
         {avg_grade}<span className="text-3xl">%</span>

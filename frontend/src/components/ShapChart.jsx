@@ -3,13 +3,13 @@ export default function ShapChart({ shap }) {
   const maxAbs = Math.max(...contributions.map(c => Math.abs(c.shap_value)), 1)
 
   return (
-    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 sm:p-6">
+    <div className="bg-surface-container border border-outline-variant rounded-xl p-4 sm:p-6 h-full flex flex-col">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-sm font-semibold text-on-surface">Feature Impact</h3>
         <span className="material-symbols-outlined text-slate-500 text-sm">info</span>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 flex-1">
         {contributions.map(({ feature, shap_value }) => {
           const isPos  = shap_value >= 0
           const pct    = Math.round((Math.abs(shap_value) / maxAbs) * 45)
