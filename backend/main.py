@@ -39,7 +39,7 @@ app = FastAPI(
 frontend_origin = os.getenv("FRONTEND_URL", "https://scholar-ai-web-application.vercel.app")
 # Allow the main frontend origin and local dev. Also accept Vercel preview domains
 # via a regex so preview deployments (which use dynamic subdomains) can access the API.
-vercel_origin_regex = os.getenv("VERCEL_ORIGIN_REGEX", r"^https://.*\\.vercel\\.app$")
+vercel_origin_regex = os.getenv("VERCEL_ORIGIN_REGEX", r"^https://.*\.vercel\.app$")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[frontend_origin, "http://localhost:5173"],
