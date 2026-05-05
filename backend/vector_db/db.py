@@ -251,3 +251,137 @@ def get_stats(user_id: str = None) -> dict:
         "avg_grade": round(r["avg_grade"], 1),
         "pass_rate": round((r["pass_count"] / total) * 100, 1) if total else 0,
     }
+
+
+def get_career_grade_guidance(target_career: str, limit: int = 5) -> dict:
+    """
+    Derive grade guidance for a target career from historical analyses.
+
+    Returns:
+      - grade statistics from students whose recommended careers include target
+      - top matching past examples (best searches)
+      - alternate career suggestions from the same cohort
+    """
+    db = get_db()
+    career = (target_career or "").strip()
+    if not career:
+        return {
+            "career": "",
+            "count": 0,
+            "required_grade": None,
+            "grade_stats": {},
+            "best_matches": [],
+            "alternate_careers": [],
+        }
+
+    regex = {"$regex": career, "$options": "i"}
+    sample_limit = max(limit, 1)
+
+    pipeline = [
+        {"$match": {"results.careers.name": regex}},
+        {"$project": {
+            "_id": 1,
+            "created_at": 1,
+            "input": 1,
+            "results.avg_grade": 1,
+            "results.status": 1,
+            "results.level": 1,
+            "results.careers": 1,
+        }},
+        {"$addFields": {
+            "matched_career": {
+                "$first": {
+                    "$filter": {
+                        "input": "$results.careers",
+                        "as": "c",
+                        "cond": {"$regexMatch": {"input": "$$c.name", "regex": career, "options": "i"}},
+                    }
+                }
+            }
+        }},
+        {"$match": {"matched_career": {"$ne": None}}},
+        {"$sort": {"matched_career.match": -1, "results.avg_grade": -1, "created_at": -1}},
+        {"$limit": 300},
+    ]
+    docs = list(db["students"].aggregate(pipeline))
+    if not docs:
+        return {
+            "career": target_career,
+            "count": 0,
+            "required_grade": None,
+            "grade_stats": {},
+            "best_matches": [],
+            "alternate_careers": [],
+        }
+
+    grade_rows = []
+    for d in docs:
+        g = d.get("results", {}).get("avg_grade")
+        if g is not None:
+            grade_rows.append((float(g), d.get("results", {}).get("status")))
+    grades = [g for g, _ in grade_rows]
+    pass_grades = [g for g, s in grade_rows if s == "Pass"]
+    sorted_grades = sorted(grades)
+    p75_idx = max(int(round(0.75 * (len(sorted_grades) - 1))), 0)
+
+    if grades:
+        min_grade = round(min(grades), 1)
+        max_grade = round(max(grades), 1)
+        avg_grade = round(sum(grades) / len(grades), 1)
+        required_grade = round(sorted_grades[p75_idx], 1)
+    else:
+        min_grade = max_grade = avg_grade = required_grade = None
+
+    best_matches = []
+    for d in docs[:sample_limit]:
+        matched = d.get("matched_career", {}) or {}
+        results = d.get("results", {}) or {}
+        best_matches.append({
+            "id": str(d.get("_id")),
+            "created_at": d.get("created_at").strftime("%d %b %Y") if hasattr(d.get("created_at"), "strftime") else str(d.get("created_at", "")),
+            "avg_grade": results.get("avg_grade"),
+            "status": results.get("status"),
+            "level": results.get("level"),
+            "career": matched.get("name"),
+            "match": round(float(matched.get("match", 0)), 1),
+        })
+
+    alternate = {}
+    for d in docs:
+        careers = (d.get("results", {}) or {}).get("careers", []) or []
+        for c in careers:
+            name = str(c.get("name", "")).strip()
+            if not name:
+                continue
+            if career.lower() in name.lower():
+                continue
+            alt = alternate.setdefault(name, {"name": name, "count": 0, "match_total": 0.0})
+            alt["count"] += 1
+            alt["match_total"] += float(c.get("match", 0))
+
+    alt_ranked = sorted(
+        (
+            {
+                "name": v["name"],
+                "frequency": v["count"],
+                "avg_match": round(v["match_total"] / v["count"], 1) if v["count"] else 0.0,
+            }
+            for v in alternate.values()
+        ),
+        key=lambda x: (x["frequency"], x["avg_match"]),
+        reverse=True,
+    )[:3]
+
+    return {
+        "career": target_career,
+        "count": len(docs),
+        "required_grade": required_grade,
+        "grade_stats": {
+            "min": min_grade,
+            "avg": avg_grade,
+            "max": max_grade,
+            "pass_avg": round(sum(pass_grades) / len(pass_grades), 1) if pass_grades else None,
+        },
+        "best_matches": best_matches,
+        "alternate_careers": alt_ranked,
+    }

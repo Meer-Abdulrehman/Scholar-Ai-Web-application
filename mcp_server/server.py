@@ -7,6 +7,7 @@ can call in natural language:
   1. predict_grade        — predict final grade + Pass/Fail
   2. recommend_career     — top 3 career matches from subject grades
   3. explain_performance  — SHAP-based explanation of the predicted grade
+  4. career_grade_guidance — required grade guidance + alternate careers from DB
 
 Run:
     cd mcp_server
@@ -23,6 +24,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from mcp.server.fastmcp import FastMCP
 from backend.services.prediction import predict_grade, explain_performance
 from backend.services.career import recommend_careers
+from backend.vector_db.db import get_career_grade_guidance
 
 # ── Server instance ───────────────────────────────────────────────────────────
 
@@ -177,6 +179,70 @@ def tool_explain_performance(
         "",
         f"  Base {result['base_value']}% + contributions = {result['predicted']}%",
     ]
+    return "\n".join(lines)
+
+
+# ── Tool 4 — career_grade_guidance ───────────────────────────────────────────
+
+@mcp.tool(
+    name="career_grade_guidance",
+    description=(
+        "Find grade requirements for a target career using historical student "
+        "analyses from the vector database. Returns a recommended grade target, "
+        "best matching past profiles, and top alternate careers."
+    ),
+)
+def tool_career_grade_guidance(
+    target_career: str,
+    top_examples: int = 3,
+) -> str:
+    """
+    Parameters
+    ----------
+    target_career : Desired field/career (e.g., Data Analyst, Software Engineer)
+    top_examples  : Number of best past matches to show (1-10)
+    """
+    top_examples = max(1, min(int(top_examples), 10))
+    result = get_career_grade_guidance(target_career=target_career, limit=top_examples)
+
+    if result["count"] == 0:
+        return (
+            "🎯 Career Grade Guidance\n"
+            + "─" * 35 + "\n"
+            + f"  Target Career : {target_career}\n"
+            + "  No historical matches found in database.\n"
+            + "  Tip: run more student analyses first, then try again."
+        )
+
+    stats = result.get("grade_stats", {})
+    lines = [
+        "🎯 Career Grade Guidance",
+        "─" * 35,
+        f"  Target Career        : {result['career']}",
+        f"  Historical Matches   : {result['count']}",
+        f"  Recommended Grade    : {result.get('required_grade')}% (target for strong chance)",
+        f"  Observed Grade Range : {stats.get('min')}% - {stats.get('max')}%",
+        f"  Cohort Average Grade : {stats.get('avg')}%",
+        f"  Pass Students Avg    : {stats.get('pass_avg')}%",
+        "",
+        "  Best Similar Profiles:",
+    ]
+
+    for i, item in enumerate(result.get("best_matches", []), 1):
+        lines.append(
+            f"  {i}. {item.get('career')} | grade {item.get('avg_grade')}% | "
+            f"{item.get('status')} | match {item.get('match')}%"
+        )
+
+    alts = result.get("alternate_careers", [])
+    if alts:
+        lines.append("")
+        lines.append("  Alternate Career Suggestions:")
+        for i, alt in enumerate(alts, 1):
+            lines.append(
+                f"  {i}. {alt['name']} (seen {alt['frequency']} times, avg match {alt['avg_match']}%)"
+            )
+
     return "\n".join(lines)
 
 
