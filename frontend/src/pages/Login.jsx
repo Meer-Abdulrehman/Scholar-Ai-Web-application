@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useAuth } from '../context/AuthContext'
 import { loginUser } from '../utils/api'
+import { playVoicePrompt } from '../utils/voicePrompt'
 import LoginRobot from '../components/LoginRobot'
 
 export default function Login() {
@@ -15,6 +16,16 @@ export default function Login() {
   const [pwdFocused, setPwdFocused] = useState(false)
   const [showPwd,    setShowPwd]    = useState(false)
   const typingTimer = useRef(null)
+  const introPlayed = useRef(false)
+
+  // Play sign-in voice prompt when page opens
+  useEffect(() => {
+    if (introPlayed.current) return
+    introPlayed.current = true
+    return playVoicePrompt(
+      'Please enter your credentials to sign in on this portal for growth tech career.',
+    )
+  }, [])
 
   // Reset mood after happy/sad
   useEffect(() => {

@@ -3,5 +3,6 @@ import { useAuth } from '../context/AuthContext'
 
 export default function ProtectedRoute({ children }) {
   const { isAuth } = useAuth()
-  return isAuth ? children : <Navigate to="/login" replace />
+  // Default unauthenticated landing is signup.
+  return isAuth ? children : <Navigate to="/signup" replace />
 }

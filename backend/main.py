@@ -5,6 +5,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 from jose import jwt, JWTError
+from threading import Thread
 import os, sys
 from pathlib import Path
 
@@ -14,7 +15,7 @@ load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 from routes.auth import router as auth_router
 from services.prediction import predict_grade, explain_performance
 from services.career import recommend_careers
-from services.tts import text_to_speech
+from services.tts import text_to_speech, prewarm_tts_cache
 from vector_db.db import save_student_analysis, get_history, get_analysis_by_id, get_stats, find_similar_students
 from config.db import connect_db
 
@@ -74,6 +75,16 @@ def startup():
         connect_db()
     except Exception as e:
         print(f"[WARNING] MongoDB connection failed: {e}")
+
+    # Warm common auth-page TTS prompts in background for faster first playback.
+    Thread(
+        target=prewarm_tts_cache,
+        args=([ 
+            "Please enter your credentials to register on this portal for growth tech career.",
+            "Please enter your credentials to sign in on this portal for growth tech career.",
+        ],),
+        daemon=True,
+    ).start()
 
 
 # ── Request Schema ────────────────────────────────────────────────────────────

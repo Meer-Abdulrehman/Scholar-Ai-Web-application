@@ -1,17 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useAuth } from '../context/AuthContext'
 import { signupUser } from '../utils/api'
+import { playVoicePrompt } from '../utils/voicePrompt'
 
 export default function Signup() {
-  const { login } = useAuth()
   const navigate   = useNavigate()
 
   const [form,    setForm]    = useState({ name: '', email: '', password: '', confirmPassword: '' })
   const [loading, setLoading] = useState(false)
   const [showPwd,  setShowPwd]  = useState(false)
   const [showCPwd, setShowCPwd] = useState(false)
+  const introPlayed = useRef(false)
+
+  // Play signup voice prompt when page opens
+  useEffect(() => {
+    if (introPlayed.current) return
+    introPlayed.current = true
+    return playVoicePrompt(
+      'Please enter your credentials to register on this portal for growth tech career.',
+    )
+  }, [])
 
   const handleChange = (e) =>
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -30,10 +39,9 @@ export default function Signup() {
 
     setLoading(true)
     try {
-      const res = await signupUser({ name: form.name, email: form.email, password: form.password })
-      login(res.data.user, res.data.token)
-      toast.success(`Account created! Welcome, ${res.data.user.name?.split(' ')[0]}! Check your email.`)
-      navigate('/', { replace: true })
+      await signupUser({ name: form.name, email: form.email, password: form.password })
+      toast.success('Account created successfully! Please sign in to continue.')
+      navigate('/login', { replace: true })
     } catch (err) {
       toast.error(err?.response?.data?.detail || 'Signup failed. Please try again.')
     } finally {
