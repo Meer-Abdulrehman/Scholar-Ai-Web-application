@@ -28,7 +28,7 @@ const TECH = [
 
 export default function About() {
   return (
-    <div className="bg-[#0B1120] min-h-screen">
+    <div className="bg-background min-h-screen">
       <main className="max-w-[1280px] mx-auto px-3 sm:px-4 md:px-6 py-8 sm:py-12 space-y-10 sm:space-y-16">
 
         {/* Hero */}
@@ -47,9 +47,9 @@ export default function About() {
         {/* Team */}
         <section className="space-y-6 sm:space-y-8">
           <div className="flex items-center gap-3 sm:gap-4">
-            <div className="h-px flex-1 bg-[#1F2937]" />
-            <h2 className="text-lg sm:text-h2 font-semibold text-white font-inter whitespace-nowrap">The Development Team</h2>
-            <div className="h-px flex-1 bg-[#1F2937]" />
+            <div className="h-px flex-1 bg-outline-variant" />
+            <h2 className="text-lg sm:text-h2 font-semibold text-on-surface font-inter whitespace-nowrap">The Development Team</h2>
+            <div className="h-px flex-1 bg-outline-variant" />
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-8">
@@ -58,17 +58,17 @@ export default function About() {
                 className={`glass-card rounded-2xl p-5 sm:p-8 group hover:border-cyan-400/50 transition-colors duration-300 anim-fade-up`}
                 style={{ animationDelay: `${i * 150}ms` }}>
                 <div className="flex items-start gap-4 sm:gap-6">
-                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl bg-surface-container-high border-2 border-[#1F2937] group-hover:border-cyan-400 transition-colors flex items-center justify-center flex-shrink-0">
-                    <span className="material-symbols-outlined text-3xl sm:text-4xl text-slate-400"
+                  <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-xl bg-surface-container-high border-2 border-outline-variant group-hover:border-cyan-400 transition-colors flex items-center justify-center flex-shrink-0">
+                    <span className="material-symbols-outlined text-3xl sm:text-4xl text-on-surface-variant"
                       style={{ fontVariationSettings: "'FILL' 1" }}>account_circle</span>
                   </div>
                   <div className="space-y-1.5 sm:space-y-2 min-w-0">
                     <h3 className="text-base sm:text-h3 font-semibold text-on-surface">{member.name}</h3>
                     <p className="text-[#4cd7f6] font-medium text-sm">{member.roll}</p>
-                    <span className="text-slate-400 text-xs sm:text-body-sm bg-[#1F2937] inline-block px-3 py-1 rounded-full">
+                    <span className="text-on-surface-variant text-xs sm:text-body-sm bg-surface-container-high border border-outline-variant inline-block px-3 py-1 rounded-full">
                       {member.role}
                     </span>
-                    <p className="text-slate-500 text-xs sm:text-sm mt-2">{member.desc}</p>
+                    <p className="text-on-surface-variant text-xs sm:text-sm mt-2 opacity-90">{member.desc}</p>
                   </div>
                 </div>
               </div>
@@ -80,7 +80,7 @@ export default function About() {
         <section className="space-y-6 sm:space-y-8">
           <div className="text-center space-y-2">
             <h2 className="text-xl sm:text-h2 font-semibold text-on-surface font-inter">Technology Stack</h2>
-            <p className="text-slate-400 text-sm sm:text-base">Built with cutting-edge tools for maximum performance and intelligence.</p>
+            <p className="text-on-surface-variant text-sm sm:text-base">Built with cutting-edge tools for maximum performance and intelligence.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-2 sm:gap-4 max-w-4xl mx-auto">
             {TECH.map(({ icon, label }, i) => (
@@ -101,7 +101,7 @@ export default function About() {
               <span className="material-symbols-outlined text-6xl sm:text-9xl">auto_awesome</span>
             </div>
             <h3 className="text-base sm:text-h3 font-semibold text-on-surface mb-3 sm:mb-4">Visionary Analysis</h3>
-            <p className="text-slate-400 leading-relaxed text-sm sm:text-base max-w-lg">
+            <p className="text-on-surface-variant leading-relaxed text-sm sm:text-base max-w-lg">
               We leverage machine learning to identify patterns in academic performance that often go
               unnoticed. By utilizing SHAP (SHapley Additive exPlanations), we provide the "why"
               behind every prediction, ensuring students understand their trajectory.
@@ -121,7 +121,7 @@ export default function About() {
               style={{ fontVariationSettings: "'FILL' 1" }}>school</span>
             <div className="mt-4">
               <h3 className="text-base sm:text-h3 font-semibold text-on-surface mb-2">Institutional Root</h3>
-              <p className="text-slate-400 text-sm">
+              <p className="text-on-surface-variant text-sm">
                 Born as a capstone project to revolutionize the student experience at the
                 University of South Asia, Lahore.
               </p>
@@ -132,19 +132,19 @@ export default function About() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#0B1120] w-full py-8 sm:py-12 border-t border-[#1F2937]">
+      <footer className="bg-surface-container-low w-full py-8 sm:py-12 border-t border-outline-variant">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
           <div className="flex flex-col items-center md:items-start gap-1 sm:gap-2">
             <span className="font-bold text-on-surface">ScholarAI Advisor</span>
-            <p className="font-inter text-xs text-slate-500 text-center md:text-left">© 2025 ScholarAI Advisor. Bridging data and human potential.</p>
-            <p className="font-inter text-[10px] text-slate-600 uppercase tracking-widest text-center md:text-left">
+            <p className="font-inter text-xs text-on-surface-variant text-center md:text-left">© 2025 ScholarAI Advisor. Bridging data and human potential.</p>
+            <p className="font-inter text-[10px] text-on-surface-variant uppercase tracking-widest text-center md:text-left opacity-80">
               University of South Asia, Lahore — Department of Computer Science
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             {['Tech Stack', 'Team', 'Documentation', 'Contact'].map(link => (
               <a key={link} href="#"
-                className="font-inter text-xs text-slate-500 hover:text-slate-300 hover:underline transition-colors duration-200">
+                className="font-inter text-xs text-on-surface-variant hover:text-cyan-400 hover:underline transition-colors duration-200">
                 {link}
               </a>
             ))}

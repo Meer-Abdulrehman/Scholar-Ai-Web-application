@@ -7,6 +7,7 @@ import {
 import { fetchHistory, fetchStats } from '../utils/api'
 
 const COLORS = { Pass: '#10b981', Probation: '#f59e0b', Fail: '#ef4444' }
+const CAREER_BAR_COLORS = ['#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#111827']
 
 function StatCard({ icon, label, value, sub, color = 'text-cyan-400' }) {
   return (
@@ -164,17 +165,38 @@ export default function Overview() {
             <h2 className="text-sm font-semibold text-on-surface mb-1">Most Recommended Careers</h2>
             <p className="text-xs text-on-surface-variant mb-4 sm:mb-6">Which careers the AI suggested most across your analyses</p>
             {careerData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={180}>
-                <BarChart data={careerData} barSize={30}>
+              <ResponsiveContainer width="100%" height={190}>
+                <BarChart
+                  data={careerData}
+                  barSize={22}
+                  barCategoryGap={72}
+                  barGap={0}
+                  margin={{ top: 4, right: 10, left: 0, bottom: 0 }}
+                >
                   <CartesianGrid stroke="var(--c-outline-variant)" strokeDasharray="4 4" vertical={false} />
-                  <XAxis dataKey="name" tick={{ fill: 'var(--c-on-surface-variant)', fontSize: 11 }} />
-                  <YAxis allowDecimals={false} tick={{ fill: 'var(--c-on-surface-variant)', fontSize: 10 }} />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fill: 'var(--c-on-surface-variant)', fontSize: 10 }}
+                    axisLine={{ stroke: 'var(--c-outline)', strokeWidth: 2.5 }}
+                    tickLine={{ stroke: 'var(--c-outline-variant)', strokeWidth: 1 }}
+                  />
+                  <YAxis
+                    allowDecimals={false}
+                    tick={{ fill: 'var(--c-on-surface-variant)', fontSize: 10 }}
+                    axisLine={{ stroke: 'var(--c-outline)', strokeWidth: 2.5 }}
+                    tickLine={{ stroke: 'var(--c-outline-variant)', strokeWidth: 1 }}
+                    width={28}
+                  />
                   <Tooltip
                     formatter={(v, n, p) => [v, p.payload.full]}
                     contentStyle={{ background: 'var(--c-surface-container)', border: '1px solid var(--c-outline-variant)', borderRadius: 12, fontSize: 12 }}
                     labelStyle={{ display: 'none' }}
                   />
-                  <Bar dataKey="count" fill="#2563eb" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="count" radius={[6, 6, 0, 0]}>
+                    {careerData.map((_, idx) => (
+                      <Cell key={`cell-${idx}`} fill={CAREER_BAR_COLORS[idx % CAREER_BAR_COLORS.length]} />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             ) : (

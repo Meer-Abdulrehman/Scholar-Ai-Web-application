@@ -2,6 +2,33 @@ import { getTTS } from './api'
 
 const ttsPromiseCache = new Map()
 
+function pickPreferredVoice(voices = []) {
+  const list = Array.isArray(voices) ? voices : []
+  if (list.length === 0) return null
+
+  const isEnglish = (v) => (v?.lang || '').toLowerCase().startsWith('en')
+  const name = (v) => (v?.name || '').toLowerCase()
+
+  // Prefer commonly-available female English voices (esp. Windows).
+  const femaleHints = [
+    'zira', 'susan', 'samantha', 'karen', 'victoria',
+    'female', 'woman', 'girl',
+  ]
+
+  const femaleEnglish = list.find(v => isEnglish(v) && femaleHints.some(h => name(v).includes(h)))
+  if (femaleEnglish) return femaleEnglish
+
+  // Next best: any en-US / en-GB voice.
+  const enUS = list.find(v => (v?.lang || '').toLowerCase() === 'en-us')
+  if (enUS) return enUS
+  const enGB = list.find(v => (v?.lang || '').toLowerCase() === 'en-gb')
+  if (enGB) return enGB
+
+  // Fallback: any English voice, else whatever default exists.
+  const anyEnglish = list.find(isEnglish)
+  return anyEnglish || list[0]
+}
+
 function getCachedTTS(message) {
   const cached = ttsPromiseCache.get(message)
   if (cached) return cached
@@ -24,14 +51,47 @@ function getCachedTTS(message) {
 
 function speakWithBrowserTTS(message, onStart, onError) {
   if (!('speechSynthesis' in window)) return null
+
   const utter = new SpeechSynthesisUtterance(message)
   utter.lang = 'en-US'
   utter.rate = 1.02
   utter.pitch = 1
   utter.onstart = onStart
   utter.onerror = onError
-  window.speechSynthesis.cancel()
-  window.speechSynthesis.speak(utter)
+
+  const synth = window.speechSynthesis
+
+  const speakNow = () => {
+    try {
+      const voices = synth.getVoices?.() || []
+      const preferred = pickPreferredVoice(voices)
+      if (preferred) utter.voice = preferred
+      synth.cancel()
+      synth.speak(utter)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  // Voices often load async on first page load (common in Chrome/Edge).
+  const voices = synth.getVoices?.() || []
+  if (voices.length > 0) {
+    speakNow()
+    return utter
+  }
+
+  // Wait for voices once, then speak with preferred (female) voice.
+  const prev = synth.onvoiceschanged
+  synth.onvoiceschanged = () => {
+    try {
+      synth.onvoiceschanged = prev || null
+    } catch { /* ignore */ }
+    speakNow()
+  }
+
+  // Some browsers never fire onvoiceschanged; attempt a quick delayed speak.
+  setTimeout(() => { speakNow() }, 250)
   return utter
 }
 

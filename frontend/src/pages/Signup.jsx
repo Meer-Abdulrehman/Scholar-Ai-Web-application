@@ -62,16 +62,16 @@ export default function Signup() {
         <div className="relative z-10 max-w-md text-center">
           {/* Logo */}
           <div className="mb-8">
-            <h1 className="text-5xl font-black tracking-tighter text-on-surface">
-              Scholar<span className="text-cyan-400">AI</span>
+            <h1 className="text-5xl font-black tracking-tighter" style={{ color: '#ffffff' }}>
+              Scholar<span className="text-cyan-300">AI</span>
             </h1>
-            <p className="text-sm tracking-[4px] uppercase text-on-surface-variant mt-1">Advisor</p>
+            <p className="text-sm tracking-[4px] uppercase mt-1" style={{ color: 'rgba(255,255,255,0.6)' }}>Advisor</p>
           </div>
 
-          <p className="text-xl font-semibold text-on-surface mb-2">
+          <p className="text-xl font-semibold mb-2" style={{ color: '#ffffff' }}>
             Join ScholarAI Advisor
           </p>
-          <p className="text-on-surface-variant text-sm mb-10 leading-relaxed">
+          <p className="text-sm mb-10 leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>
             Create your free account and start your journey to academic excellence with AI-powered insights.
           </p>
 
@@ -83,11 +83,15 @@ export default function Signup() {
               { step: '03', title: 'Get AI predictions',        desc: 'Receive personalised grade forecasts' },
               { step: '04', title: 'Follow the advice',         desc: 'Act on intelligent study recommendations' },
             ].map(({ step, title, desc }) => (
-              <div key={step} className="flex items-start gap-4 glass-card rounded-xl p-3">
-                <span className="text-cyan-400 font-black text-lg flex-shrink-0 w-8 text-center">{step}</span>
+              <div
+                key={step}
+                className="flex items-start gap-4 rounded-xl p-3"
+                style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)' }}
+              >
+                <span className="text-cyan-300 font-black text-lg flex-shrink-0 w-8 text-center">{step}</span>
                 <div>
-                  <p className="text-sm font-semibold text-on-surface">{title}</p>
-                  <p className="text-xs text-on-surface-variant mt-0.5">{desc}</p>
+                  <p className="text-sm font-semibold" style={{ color: '#ffffff' }}>{title}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.6)' }}>{desc}</p>
                 </div>
               </div>
             ))}

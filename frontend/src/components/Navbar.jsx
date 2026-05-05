@@ -126,7 +126,9 @@ export default function Navbar() {
             </button>
 
             {notifOpen && (
-              <div className={`absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-80 max-w-sm rounded-2xl border shadow-2xl overflow-hidden ${dropBg}`}>
+              <div
+                className={`fixed left-4 right-4 top-[72px] sm:top-auto sm:left-auto sm:right-0 sm:absolute sm:mt-2 sm:w-80 sm:max-w-sm rounded-2xl border shadow-2xl overflow-hidden z-[60] ${dropBg}`}
+              >
                 <div className={`flex items-center justify-between px-4 py-3 border-b ${borderCol}`}>
                   <span className={`font-semibold text-sm ${textMain}`}>Notifications</span>
                   {notifications.length > 0 && (
@@ -173,7 +175,9 @@ export default function Navbar() {
             </button>
 
             {profileOpen && (
-              <div className={`absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-72 max-w-xs rounded-2xl border shadow-2xl overflow-hidden ${dropBg}`}>
+              <div
+                className={`fixed left-4 right-4 top-[72px] sm:top-auto sm:left-auto sm:right-0 sm:absolute sm:mt-2 sm:w-72 sm:max-w-xs rounded-2xl border shadow-2xl overflow-hidden z-[60] ${dropBg}`}
+              >
                 <div className={`px-5 py-4 border-b ${borderCol} flex items-center gap-3`}>
                   <div className="w-12 h-12 rounded-full bg-primary-container border-2 border-cyan-400 flex items-center justify-center flex-shrink-0">
                     <span className="material-symbols-outlined text-white" style={{ fontVariationSettings: "'FILL' 1" }}>person</span>

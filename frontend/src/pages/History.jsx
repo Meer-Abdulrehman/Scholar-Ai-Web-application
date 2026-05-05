@@ -47,12 +47,12 @@ export default function History() {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed left-0 top-16 h-[calc(100vh-64px)] bg-[#0F172A] w-64 border-r border-[#1F2937] z-40 flex flex-col
+      <aside className={`fixed left-0 top-16 h-[calc(100vh-64px)] bg-surface-container-low w-64 border-r border-outline-variant z-40 flex flex-col
         transition-transform duration-300
         ${sideOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
         <div className="p-4 sm:p-6">
           <span className="text-base sm:text-lg font-bold text-on-surface">Performance Advisor</span>
-          <p className="font-inter text-xs text-slate-500 mt-1">Analytical Insights</p>
+          <p className="font-inter text-xs text-on-surface-variant mt-1">Analytical Insights</p>
         </div>
         <nav className="flex-1 flex flex-col mt-2">
           {navItems.map(({ icon, label, path }) => (
@@ -73,7 +73,7 @@ export default function History() {
             New Analysis
           </button>
         </div>
-        <div className="p-4 mt-auto border-t border-[#1F2937]">
+        <div className="p-4 mt-auto border-t border-outline-variant">
           <a href="/about" className="text-on-surface-variant px-4 py-2 flex items-center gap-3 hover:text-on-surface transition-all text-xs">
             <span className="material-symbols-outlined text-sm">help_outline</span>
             <span>Help</span>
@@ -154,7 +154,7 @@ export default function History() {
 
               <div className="mt-8 sm:mt-12 flex justify-center">
                 <button onClick={() => setLimit(l => l + 10)}
-                  className="px-6 sm:px-8 py-3 rounded-full border border-[#1F2937] text-slate-400 hover:text-white hover:bg-[#1F2937] transition-all flex items-center gap-2 font-semibold text-sm">
+                  className="px-6 sm:px-8 py-3 rounded-full border border-outline-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all flex items-center gap-2 font-semibold text-sm">
                   Load Older Analyses
                   <span className="material-symbols-outlined">expand_more</span>
                 </button>
