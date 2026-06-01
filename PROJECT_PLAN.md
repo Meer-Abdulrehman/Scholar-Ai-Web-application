@@ -478,3 +478,8 @@ Live Deployment      — Professors browser mein test kar sakenge
 ---
 
 *Project Plan — AI Student Advisor | University of South Asia, Lahore*
+<!-- 1 command -->
+Get-Process -Id (Get-NetTCPConnection -LocalPort 8000).OwningProcess | Stop-Process -Force
+<!-- 2 command -->
+cd "C:\Users\Abdurrehman\Desktop\data science project\backend"
+python -m uvicorn main:app --host 0.0.0.0 --port 8000

@@ -3,7 +3,9 @@ import { useState } from 'react'
 const defaultForm = {
   study_hours: 5, attendance: 85, prev_grade: 70, sleep_hours: 7,
   extracurricular: 1, gender: 1,
-  math: 85, science: 78, english: 92, computer: 80,
+  // Track: 'pre-engineering' or 'pre-medical'
+  track: 'pre-engineering',
+  math: 85, science: 78, english: 92, computer: 80, biology: 70,
 }
 
 export default function StudentForm({ onSubmit, loading }) {
@@ -11,12 +13,17 @@ export default function StudentForm({ onSubmit, loading }) {
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }))
 
-  const subjects = [
-    { key: 'math',     label: 'Mathematics' },
-    { key: 'science',  label: 'Science' },
-    { key: 'english',  label: 'English' },
-    { key: 'computer', label: 'Computer Science' },
-  ]
+  const subjectsForTrack = (track) => {
+    const base = [
+      { key: 'math',     label: 'Mathematics' },
+      { key: 'Physics',  label: 'Physics' },
+      { key: 'chemistry',  label: 'Chemistry' },
+    ]
+    if (track === 'pre-medical') {
+      return [...base, { key: 'biology', label: 'Biology' }]
+    }
+    return [...base, { key: 'computer', label: 'Computer ![1780323690741](image/StudentForm/1780323690741.png)![1780323692667](image/StudentForm/1780323692667.png)![1780323693215](image/StudentForm/1780323693215.png)![1780323703701](image/StudentForm/1780323703701.png)' }]
+  }
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -109,7 +116,20 @@ export default function StudentForm({ onSubmit, loading }) {
         </div>
 
         <div className="space-y-4 sm:space-y-5">
-          {subjects.map(({ key, label }) => (
+          {/* Track selector */}
+          <div className="mb-3">
+            <label className="text-[10px] sm:text-label-caps font-bold text-on-surface-variant tracking-widest block mb-2">TRACK</label>
+            <div className="flex p-1 bg-surface-container-high rounded-lg border border-outline-variant">
+              {[['Pre-Engineering', 'pre-engineering'], ['Pre-Medical', 'pre-medical']].map(([label, val]) => (
+                <button key={val} onClick={() => set('track', val)}
+                  className={`flex-1 py-2 text-xs sm:text-sm rounded transition-all ${form.track === val ? 'bg-primary-container text-white font-medium' : 'text-on-surface-variant hover:text-on-surface'}`}>
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {subjectsForTrack(form.track).map(({ key, label }) => (
             <div key={key} className="space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-sm sm:text-body-md text-on-surface">{label}</span>

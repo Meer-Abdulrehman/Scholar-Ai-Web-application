@@ -74,7 +74,9 @@ def tool_recommend_career(
     math: float,
     science: float,
     english: float,
-    computer: float,
+    computer: float = 70,
+    biology: float = None,
+    track: str = 'pre-engineering',
 ) -> str:
     """
     Recommend top 3 career paths based on a student's subject grades.
@@ -86,6 +88,7 @@ def tool_recommend_career(
         computer: Computer Science grade percentage (0-100)
     """
     careers = recommend_careers(math, science, english, computer,
+                                biology=biology, track=track,
                                 avg_grade=None, status=None, level=None)
     lines = []
     for c in careers:
@@ -229,6 +232,8 @@ def get_agent_advice(
     science: float = 70,
     english: float = 70,
     computer: float = 70,
+    biology: float | None = None,
+    track: str = 'pre-engineering',
 ) -> str:
     """
     Structured entry point called by FastAPI /advice endpoint.
@@ -236,6 +241,11 @@ def get_agent_advice(
     """
     extracurr_str = "yes" if extracurricular == 1 else "no"
     gender_str    = "male" if gender == 1 else "female"
+
+    def _subject_line():
+        if biology is not None:
+            return f"- Subject grades — Math: {math}, Science: {science}, English: {english}, Biology: {biology}\n\n"
+        return f"- Subject grades — Math: {math}, Science: {science}, English: {english}, Computer: {computer}\n\n"
 
     message = (
         f"Analyze this student's performance and give personalized advice:\n"
@@ -245,8 +255,7 @@ def get_agent_advice(
         f"- Sleep hours: {sleep_hours}\n"
         f"- Extracurricular activities: {extracurr_str}\n"
         f"- Gender: {gender_str}\n"
-        f"- Subject grades — Math: {math}, Science: {science}, "
-        f"English: {english}, Computer: {computer}\n\n"
+        f"{_subject_line()}"
         f"Please predict the grade, explain what is driving it, "
         f"recommend suitable careers, and give actionable advice."
     )

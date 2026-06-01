@@ -28,7 +28,8 @@ const CAREERS = [
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/10 border-emerald-500/20',
     desc: 'Diagnose and treat patients, requiring deep knowledge of biology and science.',
-    subjects: { Math: 75, Science: 95, English: 65, Computer: 55 },
+    // Show Biology instead of Computer for medical careers
+    subjects: { Math: 75, Science: 95, English: 65, Biology: 95 },
     skills: ['Biology', 'Critical Thinking', 'Patient Care', 'Research'],
     minGrade: 80,
   },

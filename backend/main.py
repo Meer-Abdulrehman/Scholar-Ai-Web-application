@@ -100,6 +100,9 @@ class StudentInput(BaseModel):
     science:  float = Field(default=70, ge=0, le=100)
     english:  float = Field(default=70, ge=0, le=100)
     computer: float = Field(default=70, ge=0, le=100)
+    biology:  float | None = Field(default=None, ge=0, le=100)
+    # Track: 'pre-engineering' or 'pre-medical'
+    track:    str = Field(default='pre-engineering')
 
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
@@ -132,7 +135,8 @@ def recommend(data: StudentInput):
     """Recommend top 3 careers based on subject grades."""
     try:
         careers = recommend_careers(
-            data.math, data.science, data.english, data.computer
+            data.math, data.science, data.english, data.computer,
+            biology=data.biology, track=data.track
         )
         return {"success": True, "data": careers}
     except Exception as e:
@@ -173,6 +177,8 @@ def advice(data: StudentInput):
             science=data.science,
             english=data.english,
             computer=data.computer,
+            biology=data.biology,
+            track=data.track,
         )
         return {"success": True, "data": {"advice": text}}
     except Exception as e:
@@ -196,6 +202,7 @@ def analyze(data: StudentInput, user_id: str | None = Depends(_get_user_id)):
         )
         careers = recommend_careers(
             data.math, data.science, data.english, data.computer,
+            biology=data.biology, track=data.track,
             avg_grade=pred.get("avg_grade"),
             status=pred.get("status"),
             level=pred.get("level"),
@@ -217,6 +224,8 @@ def analyze(data: StudentInput, user_id: str | None = Depends(_get_user_id)):
                     science=data.science,
                     english=data.english,
                     computer=data.computer,
+                    biology=data.biology,
+                    track=data.track,
                 )
             except Exception:
                 advice_text = None
